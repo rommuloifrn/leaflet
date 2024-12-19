@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kavmap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+      <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+</head>
+<body style="margin: 0;">
+    
+    <div id="map" 
+    style="
+        height: 100vh;
+        margin: 0;
+    "></div>
+
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    let caves = [
+        {
+            'name':'Apertar da Hora',
+            'description':'5km de extensão, nível 3',
+            'img':'https://3.bp.blogspot.com/-MhyuU23f8ks/T_Q2ZEQdC6I/AAAAAAAAAmI/4kC4wipJg2U/s1600/DSC_6635.JPG',
+            'lat': -5.2020,
+            'lon': -36.0830,
+        },
+        {
+            'name':'Arnoud',
+            'description':'55m de extensão, nível 2',
+            'lat': -5.2655,
+            'lon': -35.5313,
+        }
+    ]
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    for(const cave of caves) {
+        var marker = L.marker([cave.lat, cave.lon]).addTo(map);
+        marker.bindPopup(`<div><img height="150px" src="${cave.img}"></div><b>${cave.name}</b><br>${cave.description}`).openPopup();
+    }
+    
+
+    function onMapClick(e) {
+    alert("You clicked the map at " + e.latlng);
+}
+
+    map.on('click', onMapClick);
+</script>
+</body>
+</html>
